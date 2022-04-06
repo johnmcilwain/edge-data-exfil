@@ -1,0 +1,9 @@
+# This file describes a Fastly Compute@Edge package. To learn more visit:
+# https://developer.fastly.com/reference/fastly-toml/
+
+authors = ["johnmcilwain@hotmail.com"]
+description = "Edge Data Exfiltration Example"
+language = "rust"
+manifest_version = 2
+name = "edge-data-exfil"
+service_id = "3ddIj55C2Ka7JMmnisxKPl"
