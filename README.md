@@ -1,23 +1,28 @@
-# Compute@Edge default starter kit for Rust
+# Data Exfiltration Test for Fastly's Compute@Edge (in Rust)
 
-[![Deploy to Fastly](https://deploy.edgecompute.app/button)](https://deploy.edgecompute.app/deploy)
+## Description 
+A starter implementation for scanning and blocking confidential data via web requests
+Before the https response reaches the client, scan the https body and look for predefined regex matches
+   If any are found, log it and optionally replace the matches (mask) with meaningless characters
 
-Get to know the Fastly Compute@Edge environment with a basic starter that demonstrates routing, simple synthetic responses and code comments that cover common patterns.
+ Commands (see Command enum):
+   COMMAND               MODIFIED?      SINGLE PASS?        DESCRIPTION                                                     
+   --------------------  -------------  ------------------  -----------------------------------------
+   Bypass                No             No                  Bypass most code and return, might be useful for testing        
+   FindAnyMatch          No             Yes/No              Log if any regex matched
+   FindNames             No             No                  Log the list of all secret names that match                       
+   FindRegexes           No             No                  Log the list of all regexes that match                          
+   FindIndexes           No             No                  Log the list of all matching regex indexes                      
+   FindCaptures          No             No                  Contains the real secret data...do not log this!            
+   ReplaceMatches        Yes            No                  Mask any found matches (and log them)                           
+ 
+   Single pass regex (i.e. fast) is only supported when the search result is true/false and doesn't use an algorithm validator
 
-**For more details about this and other starter kits for Compute@Edge, see the [Fastly Developer Hub](https://developer.fastly.com/solutions/starters/)**.
+   There are 2 validator algorithm defined
+     LuhnNumbers         Does a check on the possible credit card number to validate it (https:en.wikipedia.org/wiki/Luhn_algorithm)
+     AlwaysTrue          Always returns yes (useful testing and for FindCaptures)
+ 
+ Initial Setup:
+   See commands.rs to setup your list of commands/regexes and for test data
 
-## Features
 
-- Allow only requests with particular HTTP methods
-- Match request URL path and methods for routing
-- Build synthetic responses at the edge
-
-## Understanding the code
-
-This starter is intentionally lightweight, and requires no dependencies aside from the [`fastly`](https://docs.rs/fastly) crate. It will help you understand the basics of processing requests at the edge using Fastly. This starter includes implementations of common patterns explained in our [using Compute@Edge](https://developer.fastly.com/learning/compute/rust/) and [VCL migration](https://developer.fastly.com/learning/compute/migrate/) guides.
-
-The starter doesn't require the use of any backends. Once deployed, you will have a Fastly service running on Compute@Edge that can generate synthetic responses at the edge.
-
-## Security issues
-
-Please see [SECURITY.md](SECURITY.md) for guidance on reporting security-related issues.
