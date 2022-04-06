@@ -100,7 +100,7 @@ fn main(request: Request) -> Result<Response, Error> {
     log::info!("{}{}", LOGGING_PREFIX, format!("Current command: {:?}", commands));
     println!("Current command: {:?}", commands);
 
-    // Send reqest off
+    // Send request off
     let mut response = request.send(BACKEND_NAME)?;
 
     // Process the results
