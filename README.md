@@ -1,11 +1,15 @@
 # Data Exfiltration Test for Fastly's Compute@Edge (in Rust)
 
 ## Description 
-A starter implementation for scanning and blocking confidential data via web requests
-Before the https response reaches the client, scan the https body and look for predefined regex matches
-   If any are found, log it and optionally replace the matches (mask) with meaningless characters
 
- Commands (see Command enum):
+A starter implementation for scanning and blocking confidential data via web requests
+
+Before the https response reaches the client, scan the https body and headers and look for predefined regex matches
+
+If any are found, log it and optionally replace the matches (mask) with meaningless characters
+
+
+```Commands (see Command enum):
    COMMAND               MODIFIED?      SINGLE PASS?        DESCRIPTION                                                     
    --------------------  -------------  ------------------  -----------------------------------------
    Bypass                No             No                  Bypass most code and return, might be useful for testing        
@@ -21,8 +25,10 @@ Before the https response reaches the client, scan the https body and look for p
    There are 2 validator algorithm defined
      LuhnNumbers         Does a check on the possible credit card number to validate it (https:en.wikipedia.org/wiki/Luhn_algorithm)
      AlwaysTrue          Always returns yes (useful testing and for FindCaptures)
- 
+ ```
+
  Initial Setup:
-   See commands.rs to setup your list of commands/regexes and for test data
+ 
+ See commands.rs to setup your list of commands/regexes and for test data
 
 
